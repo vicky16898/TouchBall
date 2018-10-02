@@ -53,13 +53,20 @@ public class DrawingView extends View implements Runnable {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int id = event.getAction();
+        float x = event.getX();
+        float y = event.getY();
+        float xS = (float) Math.pow((x - position.x) , 2);
+        float yS = (float) Math.pow((y - position.y) , 2);
+        float root = (float) Math.sqrt(xS + yS);
         switch (id) {
             case MotionEvent.ACTION_DOWN:
                 if (press != 2) {
 
                     press = 1;
                 } else {
-                    velocity = new PointF(velocity.x, -35f);
+                    if(root < (50f*density) ) {
+                        velocity = new PointF(velocity.x, -35f);
+                    }
                 }
                 return true;
 
